@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Digital Gift 🤍</title>
+
+<style>
+body{
+  margin:0;
+  font-family: Arial, sans-serif;
+  text-align:center;
+  background:white;
+}
+h2{
+  margin-top:20px;
+}
+#box{
+  margin-top:40px;
+}
+img{
+  width:230px;
+}
+p{
+  font-size:18px;
+}
+button{
+  padding:8px 18px;
+  margin:10px;
+  border:none;
+  border-radius:20px;
+  background:#eee;
+  cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<h2>Digital gift ante ila undali mari 😌</h2>
+
+<div id="box">
+  <img id="img" src="">
+  <p id="text"></p>
+  <div id="btns"></div>
+</div>
+
+<script>
+let step = 0;
+
+const scenes = [
+
+{
+  img: "https://postimg.cc/JyNjRFfp/8eff05e6",
+  text: "madam garu, meekosam okati chesanu manisha",
+  buttons: ["Next"]
+},
+
+{
+  img: "https://postimg.cc/xJkYvr9K",
+  text: "chusthara?",
+  buttons: ["chusthaaa", "chudanu"]
+},
+
+{
+  img: "https://postimg.cc/XGySZw8S",
+  text: "pleaaase chudachu ga",
+  buttons: ["sare"]
+},
+
+{
+  img: "https://postimg.cc/R6wp5Gdr",
+  text: "hammayya...",
+  buttons: ["Next"]
+},
+
+{
+  img: "https://postimg.cc/xXhS9xvn",
+  text: "gift box click cheyyandi",
+  buttons: ["Open"]
+},
+
+{
+  img: "https://postimg.cc/ppcwBG1f",
+  text: "phool for my phool 💐",
+  buttons: ["Next"]
+},
+
+{
+  img: "https://postimg.cc/KRWWTKRD",
+  text: "SMILEEEE 😁",
+  buttons: ["Next"]
+},
+
+{
+  img: "https://postimg.cc/phkGLrwD",
+  text: "tadaaaa ❤️",
+  buttons: []
+}
+
+];
+
+const img = document.getElementById("img");
+const text = document.getElementById("text");
+const btns = document.getElementById("btns");
+
+function show(){
+  img.src = scenes[step].img;
+  text.innerText = scenes[step].text;
+  btns.innerHTML = "";
+
+  scenes[step].buttons.forEach(b=>{
+    const btn = document.createElement("button");
+    btn.innerText = b;
+    btn.onclick = next;
+    btns.appendChild(btn);
+  });
+}
+
+function next(){
+  if(step < scenes.length - 1){
+    step++;
+    show();
+  }
+}
+
+show();
+</script>
+
+</body>
+</html>
