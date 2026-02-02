@@ -2,129 +2,155 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Digital Gift 🤍</title>
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For You 💜</title>
 <style>
-body{
-  margin:0;
-  font-family: Arial, sans-serif;
-  text-align:center;
-  background:white;
-}
-h2{
-  margin-top:20px;
-}
-#box{
-  margin-top:40px;
-}
-img{
-  width:230px;
-}
-p{
-  font-size:18px;
-}
-button{
-  padding:8px 18px;
-  margin:10px;
-  border:none;
-  border-radius:20px;
-  background:#eee;
-  cursor:pointer;
-}
+  :root {
+    --violet: #9d7cfd;
+    --dark: #6a4bc4;
+  }
+  body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    text-align: center;
+    background: linear-gradient(135deg, #f3efff 0%, #e0d4ff 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+  }
+  /* The "Click to Start" Cover */
+  #cover {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: #9d7cfd;
+    z-index: 999;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    cursor: pointer;
+    transition: 1s ease;
+  }
+  .gift-icon { font-size: 80px; animation: bounce 1s infinite alternate; }
+  @keyframes bounce { from { transform: scale(1); } to { transform: scale(1.1); } }
+
+  #box {
+    background: rgba(255, 255, 255, 0.75);
+    padding: 30px;
+    border-radius: 40px;
+    box-shadow: 0 15px 35px rgba(106, 75, 196, 0.2);
+    backdrop-filter: blur(10px);
+    width: 85%;
+    max-width: 320px;
+    border: 1px solid white;
+    transform: translateY(20px);
+    opacity: 0;
+    transition: 1s ease;
+  }
+  .box-active { transform: translateY(0) !important; opacity: 1 !important; }
+
+  img { width: 100%; border-radius: 20px; transition: 0.5s; }
+  p { color: #4a3a75; font-weight: 500; margin: 20px 0; }
+  button {
+    padding: 12px 25px; border: none; border-radius: 25px;
+    background: var(--dark); color: white; cursor: pointer; font-weight: bold;
+  }
+  .falling { position: fixed; top: -50px; z-index: 100; animation: fall 4s linear forwards; }
+  @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
 </style>
 </head>
-
 <body>
 
-<h2>Migurinchey Alochisthunnam konchamm pattinchukondii mammlni kuda🥴😩</h2>
+<audio id="bgMusic" loop>
+  <source src="https://files.catbox.moe/cwovza.mp3" type="audio/mpeg">
+</audio>
+
+<div id="cover" onclick="start()">
+  <div class="gift-icon">🎁</div>
+  <p style="color:white; font-size: 1.2rem;">Tap to open your gift, Manisha...</p>
+</div>
 
 <div id="box">
-  <img id="img" src="">
+  <h2 style="color:var(--dark); font-size: 1.1rem;">Migurinchey Alochisthunnam konchamm pattinchukondii mammlni kuda🥴😩</h2>
+  <img id="mainImg" src="">
   <p id="text"></p>
   <div id="btns"></div>
 </div>
 
 <script>
 let step = 0;
-
+const audio = document.getElementById("bgMusic");
 const scenes = [
-
-{
-  img: "https://i.postimg.cc/JyNjRFfp/Picsart-26-02-01-21-55-05-764.png",
-  text: "madam garu, meekosam okati chesanu manisha",
-  buttons: ["Next"]
-},
-
-{
-  img: "https://i.postimg.cc/xJkYvr9K/Picsart-26-02-01-21-58-05-138.png",
-  text: "chusthara?",
-  buttons: ["chusthaaa", "chudanu"]
-},
-
-{
-  img: "https://i.postimg.cc/XGySZw8S/Picsart-26-02-01-21-59-29-733.png",
-  text: "pleaaase chudachu ga",
-  buttons: ["sare"]
-},
-
-{
-  img: "https://i.postimg.cc/R6wp5Gdr/Picsart-26-02-01-22-02-34-037.png",
-  text: "hammayya...",
-  buttons: ["Next"]
-},
-
-{
-  img: "https://i.postimg.cc/xXhS9xvn/Picsart-26-02-01-22-04-01-739.png",
-  text: "vasthundhi vasthundhi😀",
-  buttons: ["Open"]
-},
-
-{
-  img: "https://i.postimg.cc/ppcwBG1f/Picsart-26-02-01-22-05-05-234.png",
-  text: "phool for my phool 💐",
-  buttons: ["Next"]
-},
-
-{
-  img: "https://i.postimg.cc/KRWWTKRD/Picsart-26-02-01-22-06-01-586.png",
-  text: "SMILEEEE 😁",
-  buttons: ["Next"]
-},
-
-{
-  img: "https://i.postimg.cc/phkGLrwD/Picsart-26-02-01-22-09-21-310.png",
-  text: "tadaaaa ❤️",
-  buttons: []
-}
-
+  { img: "https://i.postimg.cc/JyNjRFfp/Picsart-26-02-01-21-55-05-764.png", text: "madam garu, meekosam okati chesanu manisha", buttons: ["Next"] },
+  { img: "https://i.postimg.cc/xJkYvr9K/Picsart-26-02-01-21-58-05-138.png", text: "chusthara?", buttons: ["chusthaaa", "chudanu"] },
+  { img: "https://i.postimg.cc/XGySZw8S/Picsart-26-02-01-21-59-29-733.png", text: "pleaaase chudachu ga", buttons: ["sare"] },
+  { img: "https://i.postimg.cc/R6wp5Gdr/Picsart-26-02-01-22-02-34-037.png", text: "hammayya...", buttons: ["Next"] },
+  { img: "https://i.postimg.cc/xXhS9xvn/Picsart-26-02-01-22-04-01-739.png", text: "vasthundhi vasthundhi😀", buttons: ["Open"] },
+  { img: "https://i.postimg.cc/ppcwBG1f/Picsart-26-02-01-22-05-05-234.png", text: "phool for my phool 💐", buttons: ["Next"] },
+  { img: "https://i.postimg.cc/KRWWTKRD/Picsart-26-02-01-22-06-01-586.png", text: "SMILEEEE 😁", buttons: ["Next"] },
+  { img: "https://i.postimg.cc/phkGLrwD/Picsart-26-02-01-22-09-21-310.png", text: "tadaaaa ❤️", buttons: [] }
 ];
 
-const img = document.getElementById("img");
-const text = document.getElementById("text");
-const btns = document.getElementById("btns");
-
-function show(){
-  img.src = scenes[step].img;
-  text.innerText = scenes[step].text;
-  btns.innerHTML = "";
-
-  scenes[step].buttons.forEach(b=>{
-    const btn = document.createElement("button");
-    btn.innerText = b;
-    btn.onclick = next;
-    btns.appendChild(btn);
-  });
+function start() {
+  audio.play();
+  document.getElementById("cover").style.opacity = "0";
+  setTimeout(() => {
+    document.getElementById("cover").style.display = "none";
+    document.getElementById("box").classList.add("box-active");
+  }, 1000);
+  setInterval(createHeart, 500);
+  render();
 }
 
-function next(){
-  if(step < scenes.length - 1){
-    step++;
-    show();
+function createHeart() {
+  const h = document.createElement("div");
+  h.className = "falling";
+  h.innerHTML = "💜";
+  h.style.left = Math.random() * 100 + "vw";
+  h.style.fontSize = Math.random() * 20 + 10 + "px";
+  document.body.appendChild(h);
+  setTimeout(() => h.remove(), 4000);
+}
+
+function fireSurprise() {
+  const items = ["🎉", "🎊", "🎁", "🎀", "✨"];
+  for(let i=0; i<40; i++) {
+    setTimeout(() => {
+      const s = document.createElement("div");
+      s.className = "falling";
+      s.innerHTML = items[Math.floor(Math.random()*items.length)];
+      s.style.left = Math.random() * 100 + "vw";
+      document.body.appendChild(s);
+    }, i * 100);
   }
 }
 
-show();
+function render() {
+  const img = document.getElementById("mainImg");
+  const text = document.getElementById("text");
+  const btns = document.getElementById("btns");
+  img.style.opacity = "0";
+  setTimeout(() => {
+    img.src = scenes[step].img;
+    text.innerText = scenes[step].text;
+    btns.innerHTML = "";
+    if(step === scenes.length - 1) fireSurprise();
+    scenes[step].buttons.forEach(lbl => {
+      const b = document.createElement("button");
+      b.innerText = lbl; b.style.margin = "5px";
+      b.onclick = () => {
+        if(lbl === "chudanu") step = 2;
+        else if(step < scenes.length - 1) step++;
+        render();
+      };
+      btns.appendChild(b);
+    });
+    img.onload = () => img.style.opacity = "1";
+  }, 300);
+}
 </script>
-
 </body>
 </html>
